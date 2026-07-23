@@ -85,6 +85,7 @@ sudo dnf install openssh-server -y
 sudo systemctl enable --now sshd
 ```
 ![2.1image](https://github.com/katemckernan/sops/blob/dc6b6541a5719493e2642bb44007d0c8a0022bff/Screenshot%202026-07-23%20113531.png)
+
 Step 2.2: Verify service status
 ```bash
 # check if service is running
@@ -103,6 +104,7 @@ Step 3.1: Verify network configuration
 ipconfig /all
 ```
 ![3.1](https://github.com/katemckernan/sops/blob/d82838e1b4ebcdabdce7e52660e98bc0624552a7/Screenshot%202026-07-23%20114539.png)
+
 Step 3.2: Generate pair of cryptographic key files
 ```bash
 # generate private key and public key
@@ -118,6 +120,7 @@ Step 4.1: Transfer public key to server from Windows client
 type $env:USERPROFILE\.ssh\id_ed25519.pub | ssh username@targetserverip "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 ```
 ![4.1image](https://github.com/katemckernan/sops/blob/8644e283ed0d007bf0d8db1f623f500b68cd5d42/Screenshot%202026-07-23%20042048.png)
+
 > **For Linux clients**
 > 
 >  Replace previous command with ssh-copy-id
@@ -132,6 +135,7 @@ Step 5.1: Connect to remote server from powershell
 username@targetserverip
 ```
 ![5.1image](https://github.com/katemckernan/sops/blob/3381c54a48505e03e5beae02eb3bc3a181f96ff1/Screenshot%202026-07-23%20115355.png)
+
 Step 5.2: Disable PasswordAuthentication
 ```bash
 # use vi text editor to set the PasswordAuthentication parameter to no
@@ -147,6 +151,7 @@ Step 6.1: Check logs for public key authentication
 ssh -v username@targetserverip
 ```
 ![6.1image1](https://github.com/katemckernan/sops/blob/8644e283ed0d007bf0d8db1f623f500b68cd5d42/Screenshot%202026-07-23%20055433.png)
+
 - From remote linux terminal
 ```bash
 # check logs using keyword and look for accepted publickey
@@ -160,6 +165,7 @@ Step 7.2: Allow SSH connections permanently
 sudo firewall-cmd --permanent --add-service=ssh
 ```
 ![7.2image](https://github.com/katemckernan/sops/blob/9b4aaf9f84b2b810fe028c4dc78084637a0853a9/Screenshot%202026-07-23%20063022.png)
+
 Step 7.3: Reload and verify firewall configuration
 ```bash
 # reload to apply changes
