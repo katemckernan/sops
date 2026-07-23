@@ -118,7 +118,7 @@ type $env:USERPROFILE\.ssh\id_ed25519.pub | ssh username@targetserverip "mkdir -
 >  ```
 
 ### Step 5: Connect to the server using the private key:
-Step 5.1: Connect to remote server
+Step 5.1: Connect to remote server from powershell
 ```bash
 # enter user and ip address you want to connect to
 username@targetserverip
@@ -129,19 +129,66 @@ Step 5.2: Disable PasswordAuthentication
 sudo vi /etc/ssh/sshd_config
 ```
 
-### Step 6: Verify that SSH key authentication works
+### Step 6: Verify that SSH key authentication works:
+Step 6.1: Check logs for public key authentication
+- From client powershell:
+```bash
+# connect using verbose flag and look for authenticated using publickey
+ssh -v username@targetserverip
+```
+- From remote linux terminal
+```bash
+# check logs using keyword and look for accepted publickey
+sudo grep "publickey" /var/log/secure
+```
+
+### Step 7: Configure basic firewall access for SSH:
+Step 7.2: Allow SSH connections permanently
+```bash
+sudo firewall-cmd --permanent --add-service=ssh
+```
+Step 7.3: Reload and verify firewall configuration
+```bash
+# reload to apply changes
+sudo firewall-cmd --reload
+# verify ssh
+sudo firewall-cmd --list-services
+```
+
+### Troubleshoot common connection and permission problems:
+- **If IP address, public key, or remote system changes and you try connecting:**
+  - key entry for system no longer valid
+  - warning that remote host indentity changed
+    - **FIX**
+      - verify fingerprint
+      - remove key entry from /.ssh/knownhosts file then reconnect system for new entry
+      - ```bash
+        # optional command way to remove key entry
+        ssh-keygen -R remoteservername -f ~/.ssh/known_hosts
+        ```
+- **If permission denied when accessing folders and files:**
+  - permission denied
+  - no such file or directory
+    - **FIX**
+      - verify correct user account
+      - check permissions
+      - change ownership
+      - ```bash
+        # check current logged in user
+        whoami
+        # view permissions for specific item
+        ls -l /kates/folders/andfiles
+        # change permissions
+        sudo chown newuser /kates/folders/andfiles
+        # grant admin privileges by appending user to wheel group
+        sudo usermod -aG wheel username
+        ```
 
 ## Definitions
-
-## Commands
 
 ## Screenshots
 
 ## Expected results
-
-## Verification
-
-## Troubleshooting
 
 ## Security considerations
 
