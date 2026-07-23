@@ -41,7 +41,8 @@ The SOP covers the processes and guidelines for setting up SSH key authenticatio
 Step 1.1: Server login
 - Boot up your server running a RHEL based OS
 - Enter login credentials with root privileges
-- ![1.1image](https://github.com/katemckernan/sops/blob/518360f751b33d05e0dae43dd277fa739be95ead/Screenshot%202026-07-23%20111832.png)
+
+![1.1image](https://github.com/katemckernan/sops/blob/518360f751b33d05e0dae43dd277fa739be95ead/Screenshot%202026-07-23%20111832.png)
 
 Step 1.2: Subscription verification and device hardening
 - Open terminal and enter the following commands:
